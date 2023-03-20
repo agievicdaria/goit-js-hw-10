@@ -1,3 +1,5 @@
+import templateFunction from './country.hbs';
+
 import './css/styles.css';
 import { Notify } from 'notiflix/build/notiflix-notify-aio';
 import { fetchCountries } from './fetchCountries';
@@ -37,6 +39,7 @@ function generateCountries(countries) {
 listRef.innerHTML = markup;
 }
 
+
 function generateCountry(countries) {
   const markup = countries.map(country => {
     return `<div class="info-wrapper">
@@ -49,3 +52,4 @@ function generateCountry(countries) {
   }).join('')
   countryInfoRef.innerHTML = markup;
 }
+
