@@ -1,4 +1,5 @@
-import templateFunction from './country.hbs';
+import countryTemplate from './templates/country.hbs';
+import countriesTemplate from './templates/countries.hbs';
 
 import './css/styles.css';
 import { Notify } from 'notiflix/build/notiflix-notify-aio';
@@ -7,17 +8,17 @@ var debounce = require('lodash.debounce');
 
 const DEBOUNCE_DELAY = 300;
 const inputRef = document.querySelector('#search-box');
-const listRef = document.querySelector('.country-list');
+const countriesListRef = document.querySelector('.country-list');
 const countryInfoRef = document.querySelector('.country-info');
 
 inputRef.addEventListener('input', debounce(e => {
-  const trimValue = inputRef.value.trim();
+  const trimmedValue = inputRef.value.trim();
 
-  listRef.innerHTML = '';
+  countriesListRef.innerHTML = '';
   countryInfoRef.innerHTML = '';
   
-  if(trimValue !== '') {
-      fetchCountries(trimValue).then(data => {
+  if(trimmedValue !== '') {
+      fetchCountries(trimmedValue).then(data => {
           if(data.length > 10) {
               Notify.info("Too many matches found. Please enter a more specific name.")
           } else if(data.length >= 2 && data.length <= 10) {
@@ -31,25 +32,14 @@ inputRef.addEventListener('input', debounce(e => {
 
 function generateCountries(countries) {
   const markup = countries.map(country => {
-    return `<li class="country-item">
-    <img src="${country.flags.svg}" alt="flag of ${country.name.official}" class="country-img"/>
-    <p class="country-name">${country.name.official}</p>
-  </li>`
+    return countryTemplate(country)
 }).join('')
-listRef.innerHTML = markup;
+countriesListRef.innerHTML = markup;
 }
-
 
 function generateCountry(countries) {
   const markup = countries.map(country => {
-    return `<div class="info-wrapper">
-      <img class="info-img" src="${country.flags.svg}" alt="flag of ${country.name.official}">
-      <p class="info-name">${country.name.official}</p>
-    </div>
-    <p class="info-text"><span class="info-text-accent">Capital:</span> ${country.capital}</p>
-    <p class="info-text"><span class="info-text-accent">Population:</span> ${country.population}</p>
-    <p class="info-text"><span class="info-text-accent">Languages:</span> ${Object.values(country.languages)}</p>`
+    return countriesTemplate(country)
   }).join('')
   countryInfoRef.innerHTML = markup;
 }
-

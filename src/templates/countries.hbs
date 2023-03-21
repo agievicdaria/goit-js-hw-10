@@ -1,0 +1,11 @@
+<div class="info-wrapper">
+    <img class="info-img" src="{{flags.svg}}" alt="flag of {{name.official}}">
+    <p class="info-name">{{name.official}}</p>
+</div>
+<p class="info-text"><span class="info-text-accent">Capital:</span> {{capital}}</p>
+<p class="info-text"><span class="info-text-accent">Population:</span> {{population}}</p>
+<p class="info-text"><span class="info-text-accent">Languages:</span>
+    {{#each languages}}
+        "{{this}}"
+    {{/each}}
+</p>
